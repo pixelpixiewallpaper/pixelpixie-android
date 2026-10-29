@@ -1,0 +1,17 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'au.com.pixelpixie.wallpapers'
+ compileSdk 35
+ defaultConfig { applicationId 'au.com.pixelpixie.wallpapers'; minSdk 24; targetSdk 35; versionCode 1; versionName '1.0.0' }
+ signingConfigs {
+  release {
+   if (System.getenv('PIXELPIXIE_KEYSTORE')) {
+    storeFile file(System.getenv('PIXELPIXIE_KEYSTORE'))
+    storePassword System.getenv('PIXELPIXIE_STORE_PASSWORD')
+    keyAlias 'pixelpixie'
+    keyPassword System.getenv('PIXELPIXIE_KEY_PASSWORD')
+   }
+  }
+ }
+ buildTypes { release { minifyEnabled false; if (System.getenv('PIXELPIXIE_KEYSTORE')) signingConfig signingConfigs.release } }
+}
